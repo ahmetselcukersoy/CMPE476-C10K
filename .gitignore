@@ -1,0 +1,58 @@
+# Compiled binaries
+threadserv
+epollserv
+client_flood
+test_runner
+
+# Object files
+*.o
+
+# Debug files
+*.dSYM/
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+._*
+
+# Temporary files
+*.tmp
+*.log
+
+# Archive files (submission)
+*.tar.gz
+*.zip
+
+# Report drafts (keep only final)
+report_draft*.pdf
+
+# Valgrind output
+vgcore.*
+valgrind-out.txt
+
+# Core dumps
+core
+core.*
+
+# Backup files
+*.bak
+*.orig
+
+*.pdf
+*.docx
+*.doc
+*.txt
+*.html
+*.css
+*.js
+*.json
+*.xml
+*.yml
+*.yaml
+*.md
