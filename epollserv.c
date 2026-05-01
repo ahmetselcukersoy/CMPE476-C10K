@@ -65,12 +65,15 @@ static void handle_client(int epoll_fd, conn_ctx_t *ctx) {
 
     /* Process all complete lines */
     int result;
-    while ((result = buffer_take_line(&ctx->buf, line, sizeof(line))) == 1) {
+    int was_too_long;
+    while ((was_too_long = ctx->buf.line_too_long),
+           (result = buffer_take_line(&ctx->buf, line, sizeof(line))) == 1) {
         request_t req;
 
-        /* Check if this is the line_too_long signal (empty string after flag cleared) */
-        if (line[0] == '\0' && ctx->buf.line_too_long == 0) {
-            /* Line was too long - send error and close */
+        /* Distinguish line_too_long surface from a genuine empty line.
+           buffer_take_line returns "" in BOTH cases, so we must check the
+           flag BEFORE the call (it's cleared by the call itself). */
+        if (was_too_long) {
             req.kind = CMD_TOO_LONG;
             req.arg[0] = '\0';
             format_response(&req, &g_state, response, sizeof(response));
